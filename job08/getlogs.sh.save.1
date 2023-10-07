@@ -1,0 +1,24 @@
+
+
+utilisateur="remi"
+
+
+repertoire_backup="/home/remi/shell-exe/job08"
+
+
+current_datetime=$(date +"%d-%m-%Y-%H:%M")
+mkdir -p "$repertoire_backup"
+
+
+nom_fichier="$repertoire_backup/number_connection-$current_datetime.txt"
+
+connexions=$(grep -c "sshd.*Accepted password.*$utilisateur" /var/log/auth.log)
+
+
+echo "$connexions" > "$nom_fichier"
+tar -czf "$repertoire_backup/number_connection-$current_datetime.tar" -C "$repertoire_backup" "number_connection-$current_datetime.txt"
+
+echo "Connexions de $utilisateur enregistrées dans $nom_fichier"
+
+# mv home/remi/shell-exe/job08/number_connection-$dateRecup home/remi/shell-exe/job08/Backups
+# rm  home/remi/shell-exe/job08/number_connection-$dateRecup
